@@ -12,6 +12,8 @@ class ArticleListView(ListView):
     template_name = 'blog/articles_list.html'
     context_object_name = 'articles'
     paginate_by = 3
+    queryset = Article.objects.all()
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

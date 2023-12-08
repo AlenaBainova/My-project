@@ -14,6 +14,17 @@ class Article(models.Model):
     """
     Модель постов для сайта
     """    
+    class ArticleManager(models.Manager):
+        """
+        Кастомный менеджер для модели статей
+        """
+
+        def all(self):
+            """
+            Список статей (SQL запрос с фильтрацией для страницы списка статей)
+            """
+            return self.get_queryset().select_related('author', 'category').filter(status='published')
+
 
     STATUS_OPTIONS = (
         ('published', 'Опубликовано'), 
@@ -37,6 +48,8 @@ class Article(models.Model):
     updater = models.ForeignKey(to=User, verbose_name='Обновил', on_delete=models.SET_NULL, null=True, related_name='updater_posts', blank=True)
     fixed = models.BooleanField(verbose_name='Зафиксировано', default=False)
     category = TreeForeignKey('Category', on_delete=models.PROTECT, related_name='articles', verbose_name='Категория')
+
+    objects = ArticleManager()
 
     def __str__(self):
         return self.title
