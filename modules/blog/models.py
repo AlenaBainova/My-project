@@ -69,8 +69,8 @@ class Article(models.Model):
         db_table = 'app_articles'
         ordering = ['-fixed', '-time_create']
         indexes = [models.Index(fields=['-fixed', '-time_create', 'status'])]
-        verbose_name = 'Статья'
-        verbose_name_plural = 'Статьи'
+        verbose_name = 'Статью'
+        verbose_name_plural = 'Статей'
 
     def __str__(self):
         return self.title
